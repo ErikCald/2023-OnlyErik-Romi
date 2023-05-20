@@ -49,21 +49,21 @@ public final class Config {
     }
 
     public final static class AUTO {
-        public static final double VEL = 2;
-        public static final double ACCEL = 4;
+        public static final double VEL = 0.2;
+        public static final double ACCEL = 0.2;
         public static final boolean USE_RAMSETE_NOT_LTV = true;
-        public static final boolean DISABLE_FEEDBACK = false;
+        public static final boolean DISABLE_FEEDBACK = true;
 
         // RAMSETE
         public static final RamseteController RAMSETE_CONTROLLER = new RamseteController();
 
-        public static final double kS = 0.3;
-        public static final double kV = 2.7;
-        public static final double kA = 1.3;
+        public static final double kS = 0.5;
+        public static final double kV = 3;
+        public static final double kA = 2;
 
         public static final SimpleMotorFeedforward WHEEL_FEEDFORWARD = new SimpleMotorFeedforward(kS, kV, kA);
 
-        public static final PIDConstants WHEEL_PID = new PIDConstants(0.1, 0, 0);
+        public static final PIDConstants WHEEL_PID = new PIDConstants(0, 0, 0);
     
     
         // LTV CONTROLLER

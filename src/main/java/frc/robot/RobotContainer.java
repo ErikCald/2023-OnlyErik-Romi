@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.auto.AutoRoutines;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.OnBoardIO;
@@ -32,11 +33,10 @@ public class RobotContainer {
     private final DriveSubsystem m_drivetrain = new DriveSubsystem();
     private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
 
+    private final AutoRoutines m_autoRoutines = new AutoRoutines(m_drivetrain);
+
     // Assumes a gamepad plugged into channnel 0
     private final Joystick m_controller = new Joystick(0);
-
-    // Create SmartDashboard chooser for autonomous routines
-    private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     // NOTE: The I/O pin functionality of the 5 exposed I/O pins depends on the hardware "overlay"
     // that is specified when launching the wpilib-ws server on the Romi raspberry pi.
@@ -72,12 +72,7 @@ public class RobotContainer {
                 .onTrue(new PrintCommand("Button A Pressed"))
                 .onFalse(new PrintCommand("Button A Released"));
 
-        // Setup SmartDashboard options
-        // m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
-        // m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
-        SmartDashboard.putData(m_chooser);
-
-
+    
         new JoystickButton(m_controller, 1).onTrue(
             Commands.runOnce(() -> m_drivetrain.resetPose(new Pose2d(3, 3, new Rotation2d())))
         );
@@ -91,7 +86,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return m_chooser.getSelected();
+        return m_autoRoutines.getSelectedAuto();
     }
 
     /**

@@ -7,6 +7,15 @@
     },
     "windows": {
       "/SmartDashboard/Field": {
+        "traj": {
+          "arrows": false,
+          "style": "Line"
+        },
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SendableChooser[0]": {
         "window": {
           "visible": true
         }
@@ -15,9 +24,49 @@
   },
   "NetworkTables": {
     "transitory": {
+      "SmartDashboard": {
+        "SendableChooser[0]": {
+          "open": true
+        },
+        "open": true
+      },
       "drive": {
         "open": true
       }
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 560,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/PPRamseteCommandtargetLeftSpeed"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/drive/leftVelMPS"
+            }
+          ]
+        }
+      ]
     }
   }
 }
