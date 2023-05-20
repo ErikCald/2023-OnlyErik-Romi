@@ -12,4 +12,25 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Config {}
+public final class Config {
+    public final class ROMIHARDWARE {
+        public static final int SPARK_LEFT_CHANNEL = 0;
+        public static final int SPARK_RIGHT_CHANNEL = 1;
+
+        public static final int ENCODER_LEFT_CHANNELA = 4;
+        public static final int ENCODER_LEFT_CHANNELB = 5;
+        public static final int ENCODER_RIGHT_CHANNELA = 6;
+        public static final int ENCODER_RIGHT_CHANNELB = 7;
+
+        public static final double WHEEL_DIAMETER_METERS = 0.07;
+        public static final double ENC_COUNTS_PER_REVOLUTION = 1440;
+    }
+
+    public final class DRIVE {
+        public static final boolean INVERT_LEFT_MOTOR = false;
+        public static final boolean INVERT_RIGHT_MOTOR = true;
+    }
+
+
+
+}

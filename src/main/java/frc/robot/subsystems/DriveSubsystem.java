@@ -7,23 +7,22 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Config.DRIVE;
+import frc.robot.Config.ROMIHARDWARE;
 import frc.robot.sensors.RomiGyro;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Drivetrain extends SubsystemBase {
-    private static final double kCountsPerRevolution = 1440.0;
-    private static final double kWheelDiameterInch = 2.75591; // 70 mm
-
+public class DriveSubsystem extends SubsystemBase {
     // The Romi has the left and right motors set to
     // PWM channels 0 and 1 respectively
-    private final Spark m_leftMotor = new Spark(0);
-    private final Spark m_rightMotor = new Spark(1);
+    private final Spark m_leftMotor = new Spark(ROMIHARDWARE.SPARK_LEFT_CHANNEL);
+    private final Spark m_rightMotor = new Spark(ROMIHARDWARE.SPARK_RIGHT_CHANNEL);
 
     // The Romi has onboard encoders that are hardcoded
     // to use DIO pins 4/5 and 6/7 for the left and right
-    private final Encoder m_leftEncoder = new Encoder(4, 5);
-    private final Encoder m_rightEncoder = new Encoder(6, 7);
+    private final Encoder m_leftEncoder = new Encoder(ROMIHARDWARE.ENCODER_LEFT_CHANNELA, ROMIHARDWARE.ENCODER_LEFT_CHANNELB);
+    private final Encoder m_rightEncoder = new Encoder(ROMIHARDWARE.ENCODER_RIGHT_CHANNELA, ROMIHARDWARE.ENCODER_RIGHT_CHANNELB);
 
     // Set up the differential drive controller
     private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
@@ -35,18 +34,20 @@ public class Drivetrain extends SubsystemBase {
     private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
 
     /** Creates a new Drivetrain. */
-    public Drivetrain() {
-        // We need to invert one side of the drivetrain so that positive voltages
-        // result in both sides moving forward. Depending on how your robot's
-        // gearbox is constructed, you might have to invert the left side instead.
-        m_rightMotor.setInverted(true);
+    public DriveSubsystem() {
+        m_leftMotor.setInverted(DRIVE.INVERT_LEFT_MOTOR);
+        m_rightMotor.setInverted(DRIVE.INVERT_RIGHT_MOTOR);
 
-        // Use inches as unit for encoder distances
-        m_leftEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
-        m_rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterInch) / kCountsPerRevolution);
+        m_leftEncoder.setDistancePerPulse((Math.PI * ROMIHARDWARE.WHEEL_DIAMETER_METERS) / ROMIHARDWARE.ENC_COUNTS_PER_REVOLUTION);
+        m_rightEncoder.setDistancePerPulse((Math.PI * ROMIHARDWARE.WHEEL_DIAMETER_METERS) / ROMIHARDWARE.ENC_COUNTS_PER_REVOLUTION);
         resetEncoders();
     }
 
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
+    
     public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
         m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
     }
@@ -64,16 +65,16 @@ public class Drivetrain extends SubsystemBase {
         return m_rightEncoder.get();
     }
 
-    public double getLeftDistanceInch() {
+    public double getLeftDistanceMeter() {
         return m_leftEncoder.getDistance();
     }
 
-    public double getRightDistanceInch() {
+    public double getRightDistanceMeter() {
         return m_rightEncoder.getDistance();
     }
 
-    public double getAverageDistanceInch() {
-        return (getLeftDistanceInch() + getRightDistanceInch()) / 2.0;
+    public double getAverageDistanceMeter() {
+        return (getLeftDistanceMeter() + getRightDistanceMeter()) / 2.0;
     }
 
     /**
@@ -133,10 +134,5 @@ public class Drivetrain extends SubsystemBase {
     /** Reset the gyro. */
     public void resetGyro() {
         m_gyro.reset();
-    }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
     }
 }

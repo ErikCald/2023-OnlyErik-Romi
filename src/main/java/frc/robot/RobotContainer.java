@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
 
@@ -25,7 +25,7 @@ import frc.robot.subsystems.OnBoardIO.ChannelMode;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final DriveSubsystem m_drivetrain = new DriveSubsystem();
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
 
   // Assumes a gamepad plugged into channnel 0
